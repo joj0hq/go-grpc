@@ -33,6 +33,53 @@ brew tap grpc/grpc
 brew install grpc
 ```
 
+## コンテナの起動
+
+```bash
+docker-compose up
+```
+
+## grpc_cliでの動作確認
+command
+```bash
+grpc_cli ls localhost:50051
+```
+
+response
+```bash
+grpc.reflection.v1alpha.ServerReflection
+todo_app.ToDoService
+```
+
+command
+```bash
+grpc_cli ls localhost:50051 todo_app.ToDoService -l
+```
+
+response
+```bash
+filename: proto/todo.proto
+package: todo_app;
+service ToDoService {
+  rpc CreateTask(todo_app.CreateTaskRequest) returns (todo_app.CreateTaskResponse) {}
+  rpc ShowList(todo_app.ShowListRequest) returns (todo_app.ShowListResponse) {}
+}
+```
+
+command
+```bash
+grpc_cli call localhost:50051 todo_app.ToDoService.CreateTask 'title: "HELLO"'
+```
+
+response
+```bash
+connecting to localhost:50051
+title: "HELLO"
+create_time {
+  seconds: 1641139300
+  nanos: 49475000
+}
+```
 ## ドキュメント生成用のインストール
 
 ```bash
