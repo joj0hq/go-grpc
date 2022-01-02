@@ -1,0 +1,36 @@
+syntax = "proto3";
+
+package todo_app;
+
+// コードが自動生成されるディレクトリを指定
+option go_package = "/pb";
+
+// 他のパッケージのメッセージ型をインポートできる
+// Well Known Types(Google提供のメッセージ型)を使用
+import "google/protobuf/timestamp.proto";
+
+service ToDoService {
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse) {}
+  rpc ShowList (ShowListRequest) returns (ShowListResponse) {}
+}
+
+message Task {
+  string title = 1;
+  google.protobuf.Timestamp create_time = 2;
+}
+
+message CreateTaskRequest {
+  string title = 1;
+}
+
+message CreateTaskResponse {
+  string title = 1;
+  google.protobuf.Timestamp create_time = 2;
+}
+
+message ShowListRequest {}
+
+message ShowListResponse {
+  repeated Task tasks = 1;
+  int64 amount = 2;
+}
